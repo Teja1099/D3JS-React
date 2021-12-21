@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { arc } from "d3";
 
 const data = [
   { item: "A", count: 590 },
@@ -16,7 +17,13 @@ const PieChart1 = () => {
     // Get positions for each data object
     const piedata = d3.pie().value((d) => d.count)(data);
     // Define arcs for graphing
-    const arc = d3.arc().innerRadius(100).outerRadius(200);
+    const arc = d3
+      .arc()
+      .innerRadius(100)
+      .outerRadius(200)
+      .padRadius(300)
+      .padAngle(2 / 300)
+      .cornerRadius(8);
 
     const colors = d3.scaleOrdinal([
       "#ffa822",
@@ -31,10 +38,9 @@ const PieChart1 = () => {
       .select(pieChart.current)
       .attr("width", 600)
       .attr("height", 600)
-      // .style('background-color','yellow')
+      // .style("background-color", "yellow")
       .append("g")
       .attr("transform", "translate(300,300)");
-
     // Add tooltip
     const tooldiv = d3
       .select("#chartArea")
@@ -68,11 +74,29 @@ const PieChart1 = () => {
       .on("mouseout", () => {
         tooldiv.style("visibility", "hidden");
       });
+
+    // add label as text
+    // svg
+    //   .append("g")
+    //   .selectAll("text")
+    //   .data(piedata)
+    //   .join("text")
+    //   .attr("dy", "1.35em")
+    //   .attr("fill-opacity", (d) => `labelVisible(${+d.current})`)
+    //   .attr("transform", `translate(${arc.centroid((d) => d).join(",")})`)
+    //   .text((d) => d.data.count);
   });
 
   return (
     <div id="chartArea">
-      <svg ref={pieChart}></svg>
+      <svg ref={pieChart}>
+        {/* <text
+          fill="white"
+          transform={`translate(${arc.centroid(d).join(", ")})`}
+        >
+          text
+        </text> */}
+      </svg>
     </div>
   );
 };

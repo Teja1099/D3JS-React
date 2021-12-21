@@ -72,6 +72,16 @@ const sample = [
 const BarChart1 = () => {
   const d3Chart = useRef();
 
+  const reveal = (path) =>
+    path
+      .transition()
+      .duration(5000)
+      .ease(d3.easeLinear)
+      .attrTween("stroke-dasharray", function () {
+        const length = this.getTotalLength();
+        return d3.interpolate(`0,${length}`, `${length},${length}`);
+      });
+
   // Ref for updating dimention
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -126,7 +136,7 @@ const BarChart1 = () => {
       .domain(d3.range(data.length))
       .range([margin.left, chartwidth - margin.right])
       .padding(0.1);
-    console.log(x);
+    // console.log(x);
 
     svg
       .append("g")

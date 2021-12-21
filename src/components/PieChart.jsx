@@ -8,6 +8,7 @@ export default function PieChart() {
   const height = 500;
   const centerX = width / 2;
   const centerY = height / 2;
+
   const csvUrl =
     "https://gist.githubusercontent.com/curran/b236990081a24761f7000567094914e0/raw/cssNamedColors.csv";
 
@@ -19,21 +20,27 @@ export default function PieChart() {
   //       })
   //       .then(setData(temp));
   //   };
+
   useEffect(() => {
     d3.csv(csvUrl).then(setData);
   }, []);
   const pieArc = d3.arc().innerRadius(0).outerRadius(width);
-
+  // console.log(data);
   if (!data) {
     return <pre>"Loading..."</pre>;
   }
+
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${centerX},${centerY})`}>
         {pie()
           .value(1)(data)
           .map((d) => (
-            <path fill={d.data["RGB hex value"]} d={pieArc(d)} />
+            <path
+              key={d.data["Specification"]}
+              fill={d.data["RGB hex value"]}
+              d={pieArc(d)}
+            />
           ))}
         {/* {data.map((d, i) => (
           <path

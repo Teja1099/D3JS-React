@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import * as d3 from "d3";
 import data from "../json/Records";
 import { max } from "d3";
@@ -19,6 +19,11 @@ const innerHeight = height - margin.bottom - margin.top;
 
 const yValue = (d) => d.genre;
 const xValue = (d) => d.count;
+
+const color = d3
+  .scaleSequential()
+  .domain([0, d3.max(data, (d) => d.count)])
+  .interpolator(d3.interpolateBlues);
 
 const AxisLeft = ({ yScale }) =>
   yScale.domain().map((tickValue) => (
@@ -51,7 +56,8 @@ const AxisBottom = ({ xScale, innerHeight }) =>
 const Marks = ({ data, xScale, yScale, xValue, yValue }) =>
   data.map((d) => (
     <rect
-      className="mark"
+      // className="mark"
+      fill={`${color(d.count)}`}
       key={yValue(d)}
       x={0}
       y={yScale(yValue(d))}
@@ -63,10 +69,6 @@ const Marks = ({ data, xScale, yScale, xValue, yValue }) =>
   ));
 
 const BarChart = () => {
-  // const [data, setData] = useState(null);
-  // const csvUrl =
-  //   "https://gist.githubusercontent.com/curran/0ac4077c7fc6390f5dd33bf5c06cb5ff/raw/605c54080c7a93a417a3cea93fd52e7550e76500/UN_Population_2019.csv";
-
   const yScale = d3
     .scaleBand()
     .domain(data.map(yValue))
@@ -77,16 +79,6 @@ const BarChart = () => {
     .scaleLinear()
     .domain([0, max(data, xValue)])
     .range([0, innerWidth]);
-
-  // useEffect(() => {
-  //   const row = (d) => {
-  //     d.Population = +d["2020"];
-  //     return d;
-  //   };
-  //   d3.csv(csvUrl, row).then((data) => {
-  //     setData(data.slice(0, 10));
-  //   });
-  // }, []);
 
   return (
     <svg /*style={{ backgroundColor: "red" }}*/ width={width} height={height}>

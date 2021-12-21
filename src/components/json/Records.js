@@ -33,11 +33,11 @@ const Records = [
   },
   {
     genre: "Foreign",
-    count: "73",
+    count: "51",
   },
   {
     genre: "Games",
-    count: "61",
+    count: "41",
   },
   {
     genre: "Horror",
@@ -49,7 +49,7 @@ const Records = [
   },
   {
     genre: "New",
-    count: "63",
+    count: "10",
   },
   {
     genre: "Sci-Fi",
@@ -57,11 +57,11 @@ const Records = [
   },
   {
     genre: "Sports",
-    count: "74",
+    count: "21",
   },
   {
     genre: "Travel",
-    count: "57",
+    count: "30",
   },
 ];
 
