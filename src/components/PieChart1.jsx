@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { arc } from "d3";
 
 const data = [
   { item: "A", count: 590 },
